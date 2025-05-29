@@ -1,4 +1,5 @@
-package com.harmonyclient;
+package com.classicube;
+//Package ID has to remain as classicube, otherwise it crashes.
 import android.view.InputDevice;
 import android.view.MotionEvent;
 import android.view.View;

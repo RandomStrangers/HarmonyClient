@@ -1,4 +1,5 @@
-package com.harmonyclient;
+package com.classicube;
+//Package ID has to remain as classicube, otherwise it crashes.
 import android.text.Editable;
 import android.text.Selection;
 import android.text.SpannableStringBuilder;

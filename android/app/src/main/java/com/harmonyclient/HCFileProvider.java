@@ -1,4 +1,5 @@
-package com.harmonyclient;
+package com.classicube;
+//Package ID has to remain as classicube, otherwise it crashes.
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;

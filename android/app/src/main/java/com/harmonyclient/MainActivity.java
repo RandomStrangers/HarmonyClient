@@ -1,4 +1,5 @@
-package com.harmonyclient;
+package com.classicube;
+//Package ID has to remain as classicube, otherwise it crashes.
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -47,7 +48,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 
-// This class contains all the glue/interop code for bridging ClassiCube to the java Android world.
+// This class contains all the glue/interop code for bridging HarmonyClient to the java Android world.
 // Some functionality is only available on later Android versions - try {} catch {} is used in such places 
 //   to ensure that the game can still run on earlier Android versions (albeit with reduced functionality)
 // Currently the minimum required API level to run the game is level 9 (Android 2.3). 
@@ -459,8 +460,8 @@ public class MainActivity extends Activity
 			Log.i("HC_WIN", "cur view " + curView);
 			holder.removeCallback(this);
 			
-			//08-02 21:03:02.967: E/BufferQueueProducer(1350): [SurfaceView - com.classicube.ClassiCube/com.classicube.MainActivity#0] disconnect: not connected (req=2)
-			//08-02 21:03:02.968: E/SurfaceFlinger(1350): Failed to find layer (SurfaceView - com.classicube.ClassiCube/com.classicube.MainActivity#0) in layer parent (no-parent).
+			//08-02 21:03:02.967: E/BufferQueueProducer(1350): [SurfaceView - com.harmonyclient.HarmonyClient/com.harmonyclient.MainActivity#0] disconnect: not connected (req=2)
+			//08-02 21:03:02.968: E/SurfaceFlinger(1350): Failed to find layer (SurfaceView - com.harmonyclient.HarmonyClient/com.harmonyclient.MainActivity#0) in layer parent (no-parent).
 	
 			MainActivity.this.pushCmd(CMD_WIN_DESTROYED);
 			// In case game thread is blocked showing a dialog on main thread
