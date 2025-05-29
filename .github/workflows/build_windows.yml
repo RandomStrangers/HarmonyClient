@@ -5,7 +5,9 @@ on:
     branches:
       - master
   workflow_dispatch:
-
+  schedule:
+    # Every Sunday at 12am
+    - cron: '0 0 * * 0'
 concurrency:
   group: ${{ github.ref }}-windows
   cancel-in-progress: true
@@ -30,43 +32,43 @@ jobs:
           
           cp misc/windows/CCicon_32.res src/CCicon_32.res
           cd src
-          i686-w64-mingw32-gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.WIN32_FLAGS }} -o cc-w32-d3d9.exe  $LATEST_FLAG -lwinmm -limagehlp
-          i686-w64-mingw32-gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.WIN32_FLAGS }} -o cc-w32-ogl.exe   $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_GL1 -lwinmm -limagehlp -lopengl32
-          i686-w64-mingw32-gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.WIN32_FLAGS }} -o cc-w32-d3d11.exe $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_D3D11 -lwinmm -limagehlp
+          i686-w64-mingw32-gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.WIN32_FLAGS }} -o hc-w32-d3d9.exe  $LATEST_FLAG -lwinmm -limagehlp
+          i686-w64-mingw32-gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.WIN32_FLAGS }} -o hc-w32-ogl.exe   $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_GL1 -lwinmm -limagehlp -lopengl32
+          i686-w64-mingw32-gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.WIN32_FLAGS }} -o hc-w32-d3d11.exe $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_D3D11 -lwinmm -limagehlp
           
           # mingw defaults to i686, but some really old CPUs only support i586
-          i686-w64-mingw32-gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.WIN32_FLAGS }} -march=i586 -o cc-w9x-ogl.exe $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_GL1 -DCC_BUILD_NOSTDLIB -lwinmm -limagehlp -lopengl32
+          i686-w64-mingw32-gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.WIN32_FLAGS }} -march=i586 -o hc-w9x-ogl.exe $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_GL1 -DCC_BUILD_NOSTDLIB -lwinmm -limagehlp -lopengl32
 
 
       - uses: ./.github/actions/notify_failure
         if: ${{ always() && steps.compile.outcome == 'failure' }}
         with:
-          NOTIFY_MESSAGE: 'Failed to compile 32 bit HarmonyClient Windows build! <@999409543001931788>'
+          NOTIFY_MESSAGE: 'Failed to compile 32 bit HarmonyClient Windows builds! <@999409543001931788>'
           WEBHOOK_URL: '${{ secrets.WEBHOOK_URL }}'
           
           
       - uses: ./.github/actions/upload_build
         if: ${{ always() && steps.compile.outcome == 'success' }}
         with:
-          SOURCE_FILE: 'src/cc-w32-d3d9.exe'
+          SOURCE_FILE: 'src/hc-w32-d3d9.exe'
           DEST_NAME: 'HarmonyClient-Win32-Direct3D9.exe'
           
       - uses: ./.github/actions/upload_build
         if: ${{ always() && steps.compile.outcome == 'success' }}
         with:
-          SOURCE_FILE: 'src/cc-w32-ogl.exe'
+          SOURCE_FILE: 'src/hc-w32-ogl.exe'
           DEST_NAME: 'HarmonyClient-Win32-OpenGL.exe'
           
       - uses: ./.github/actions/upload_build
         if: ${{ always() && steps.compile.outcome == 'success' }}
         with:
-          SOURCE_FILE: 'src/cc-w32-d3d11.exe'
+          SOURCE_FILE: 'src/hc-w32-d3d11.exe'
           DEST_NAME: 'HarmonyClient-Win32-Direct3D11.exe'
           
       - uses: ./.github/actions/upload_build
         if: ${{ always() && steps.compile.outcome == 'success' }}
         with:
-          SOURCE_FILE: 'src/cc-w9x-ogl.exe'
+          SOURCE_FILE: 'src/hc-w9x-ogl.exe'
           DEST_NAME: 'HarmonyClient-Win9x.exe'
           
           
@@ -96,34 +98,34 @@ jobs:
           
           cp misc/windows/CCicon_64.res src/CCicon_64.res
           cd src
-          x86_64-w64-mingw32-gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.WIN64_FLAGS }} -o cc-w64-d3d9.exe  $LATEST_FLAG -lwinmm -limagehlp
-          x86_64-w64-mingw32-gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.WIN64_FLAGS }} -o cc-w64-ogl.exe   $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_GL1 -lwinmm -limagehlp -lopengl32
-          x86_64-w64-mingw32-gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.WIN64_FLAGS }} -o cc-w64-d3d11.exe $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_D3D11 -lwinmm -limagehlp
+          x86_64-w64-mingw32-gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.WIN64_FLAGS }} -o hc-w64-d3d9.exe  $LATEST_FLAG -lwinmm -limagehlp
+          x86_64-w64-mingw32-gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.WIN64_FLAGS }} -o hc-w64-ogl.exe   $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_GL1 -lwinmm -limagehlp -lopengl32
+          x86_64-w64-mingw32-gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.WIN64_FLAGS }} -o hc-w64-d3d11.exe $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_D3D11 -lwinmm -limagehlp
           
           
       - uses: ./.github/actions/notify_failure
         if: ${{ always() && steps.compile.outcome == 'failure' }}
         with:
-          NOTIFY_MESSAGE: 'Failed to compile 64 bit HarmonyClient Windows build! <@999409543001931788>'
+          NOTIFY_MESSAGE: 'Failed to compile 64 bit HarmonyClient Windows builds! <@999409543001931788>'
           WEBHOOK_URL: '${{ secrets.WEBHOOK_URL }}'
           
           
       - uses: ./.github/actions/upload_build
         if: ${{ always() && steps.compile.outcome == 'success' }}
         with:
-          SOURCE_FILE: 'src/cc-w64-d3d9.exe'
+          SOURCE_FILE: 'src/hc-w64-d3d9.exe'
           DEST_NAME: 'HarmonyClient-Win64-Direct3D9.exe'
           
       - uses: ./.github/actions/upload_build
         if: ${{ always() && steps.compile.outcome == 'success' }}
         with:
-          SOURCE_FILE: 'src/cc-w64-ogl.exe'
+          SOURCE_FILE: 'src/hc-w64-ogl.exe'
           DEST_NAME: 'HarmonyClient-Win64-OpenGL.exe'
           
       - uses: ./.github/actions/upload_build
         if: ${{ always() && steps.compile.outcome == 'success' }}
         with:
-          SOURCE_FILE: 'src/cc-w64-d3d11.exe'
+          SOURCE_FILE: 'src/hc-w64-d3d11.exe'
           DEST_NAME: 'HarmonyClient-Win64-Direct3D11.exe'
           
           
