@@ -1,12 +1,13 @@
 package com.classicube;
+//Package ID has to remain as classicube, otherwise it crashes.
 import android.view.InputDevice;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class CCMotionListener implements View.OnGenericMotionListener {
+public class HCMotionListener implements View.OnGenericMotionListener {
     MainActivity activity;
 
-    public CCMotionListener(MainActivity activity) {
+    public HCMotionListener(MainActivity activity) {
         this.activity = activity;
     }
 

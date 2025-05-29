@@ -1,4 +1,5 @@
 package com.classicube;
+//Package ID has to remain as classicube, otherwise it crashes.
 import android.text.Editable;
 import android.text.Selection;
 import android.text.SpannableStringBuilder;
@@ -9,11 +10,11 @@ import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
-public class CCView extends SurfaceView {
+public class HCView extends SurfaceView {
     SpannableStringBuilder kbText;
     MainActivity activity;
 
-    public CCView(MainActivity activity) {
+    public HCView(MainActivity activity) {
         // setFocusable, setFocusableInTouchMode - API level 1
         super(activity);
         this.activity = activity;
