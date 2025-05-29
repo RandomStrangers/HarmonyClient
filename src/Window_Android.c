@@ -10,7 +10,7 @@
 #include <android/native_window.h>
 #include <android/native_window_jni.h>
 #include <android/keycodes.h>
-
+#include <unistd.h>
 static ANativeWindow* win_handle;
 static cc_bool winCreated;
 static jmethodID JAVA_openKeyboard, JAVA_setKeyboardText, JAVA_closeKeyboard;
