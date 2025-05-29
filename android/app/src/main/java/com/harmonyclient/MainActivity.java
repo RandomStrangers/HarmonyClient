@@ -430,7 +430,7 @@ public class MainActivity extends Activity
 	
 	void hookMotionListener(View view) {
 		try {
-			CCMotionListener listener = new CCMotionListener(this);
+			HCMotionListener listener = new HCMotionListener(this);
 			view.setOnGenericMotionListener(listener);
 		} catch (Exception ex) {
 			// Unsupported on android 12
