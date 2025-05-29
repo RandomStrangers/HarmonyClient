@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        applicationId = 'com.classicube.android.client'
+        applicationId = 'com.harmonyclient.android.client'
         minSdkVersion 13
         targetSdkVersion 26
         externalNativeBuild {
