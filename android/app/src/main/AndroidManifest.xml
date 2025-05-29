@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- BEGIN_INCLUDE(manifest) -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.harmonyclient.android.client"
+          package="com.classicube.android.client"
           android:versionCode="1080"
           android:versionName="1.0.8">
 
@@ -12,13 +12,13 @@
   
   <application android:icon="@mipmap/hcicon" android:label="Harmony Client">
     <provider
-        android:name="com.harmonyclient.HCFileProvider"
+        android:name="com.classicube.HCFileProvider"
         android:authorities="com.harmonyclient.android.client.provider"
         android:exported="false"
         android:grantUriPermissions="true" >
     </provider>
 
-    <activity android:name="com.harmonyclient.MainActivity" android:label="Harmony Client"
+    <activity android:name="com.classicube.MainActivity" android:label="Harmony Client"
               android:configChanges="orientation|screenSize|keyboard|keyboardHidden">
 
       <intent-filter>
