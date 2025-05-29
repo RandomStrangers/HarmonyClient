@@ -1,4 +1,4 @@
-package com.classicube;
+package com.harmonyclient;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 
-public class CCFileProvider extends ContentProvider
+public class HCFileProvider extends ContentProvider
 {
     final static String[] DEFAULT_COLUMNS = { OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE, MediaStore.MediaColumns.DATA };
     File root;
