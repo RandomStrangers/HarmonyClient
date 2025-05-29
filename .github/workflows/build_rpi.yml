@@ -6,7 +6,9 @@ on:
       - main
       - master
   workflow_dispatch:
-
+  schedule:
+    # Every Sunday at 12am
+    - cron: '0 0 * * 0'
 concurrency:
   group: ${{ github.ref }}-rpi
   cancel-in-progress: true
@@ -36,7 +38,7 @@ jobs:
           LATEST_FLAG=-DCC_COMMIT_SHA=\"$GITHUB_SHA\"
           
           cd src
-          $CC *.c ${{ env.COMMON_FLAGS }} ${{ env.RPI32_FLAGS }} $LATEST_FLAG -o cc-rpi32 -lGLESv2 -lEGL -lX11 -lXi -lm -lpthread -ldl -lrt
+          $CC *.c ${{ env.COMMON_FLAGS }} ${{ env.RPI32_FLAGS }} $LATEST_FLAG -o hc-rpi32 -lGLESv2 -lEGL -lX11 -lXi -lm -lpthread -ldl -lrt
 
 
       - uses: ./.github/actions/notify_failure
@@ -49,7 +51,7 @@ jobs:
       - uses: ./.github/actions/upload_build
         if: ${{ always() && steps.compile.outcome == 'success' }}
         with:
-          SOURCE_FILE: 'src/cc-rpi32'
+          SOURCE_FILE: 'src/hc-rpi32'
           DEST_NAME: 'HarmonyClient-rpi32'
           
           
@@ -84,7 +86,7 @@ jobs:
           LATEST_FLAG=-DCC_COMMIT_SHA=\"$GITHUB_SHA\"
           
           cd src
-          $CC *.c ${{ env.COMMON_FLAGS }} ${{ env.RPI64_FLAGS }} $LATEST_FLAG -o cc-rpi64 -lGLESv2 -lEGL -lX11 -lXi -lm -lpthread -ldl -lrt
+          $CC *.c ${{ env.COMMON_FLAGS }} ${{ env.RPI64_FLAGS }} $LATEST_FLAG -o hc-rpi64 -lGLESv2 -lEGL -lX11 -lXi -lm -lpthread -ldl -lrt
 
 
       - uses: ./.github/actions/notify_failure
@@ -97,7 +99,7 @@ jobs:
       - uses: ./.github/actions/upload_build
         if: ${{ always() && steps.compile.outcome == 'success' }}
         with:
-          SOURCE_FILE: 'src/cc-rpi64'
+          SOURCE_FILE: 'src/hc-rpi64'
           DEST_NAME: 'HarmonyClient-rpi64'
           
           
