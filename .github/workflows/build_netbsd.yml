@@ -6,7 +6,9 @@ on:
       - main
       - master
   workflow_dispatch:
-
+  schedule:
+    # Every Sunday at 12am
+    - cron: '0 0 * * 0'
 concurrency:
   group: ${{ github.ref }}-netbsd
   cancel-in-progress: true
@@ -39,20 +41,20 @@ jobs:
           echo $LATEST_FLAG
           
           cd src
-          x86_64-unknown-netbsd-gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.PLAT64_FLAGS }} $LATEST_FLAG -o cc-netbsd64-gl1 -lm -lpthread -lX11 -lXi -lGL -lexecinfo
+          x86_64-unknown-netbsd-gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.PLAT64_FLAGS }} $LATEST_FLAG -o hc-netbsd64-gl1 -lm -lpthread -lX11 -lXi -lGL -lexecinfo
 
 
       - uses: ./.github/actions/notify_failure
         if: ${{ always() && steps.compile.outcome == 'failure' }}
         with:
-          NOTIFY_MESSAGE: 'Failed to compile HarmonyClient NetBSD build(s)! <@999409543001931788>'
+          NOTIFY_MESSAGE: 'Failed to compile HarmonyClient NetBSD build! <@999409543001931788>'
           WEBHOOK_URL: '${{ secrets.WEBHOOK_URL }}'
           
           
       - uses: ./.github/actions/upload_build
         if: ${{ always() && steps.compile.outcome == 'success' }}
         with:
-          SOURCE_FILE: 'src/cc-netbsd64-gl1'
+          SOURCE_FILE: 'src/hc-netbsd64-gl1'
           DEST_NAME: 'HarmonyClient-NetBSD-64'
           
           
