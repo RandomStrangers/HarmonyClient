@@ -1,10 +1,11 @@
-name: Build latest (Android2)
+name: Build latest (Android)
 # trigger via either push to selected branches or on manual run
 on:
   push:
     branches:
       - main
       - master
+      - Android-Rebuild
   workflow_dispatch:
   schedule:
     # Every Sunday at 12am
@@ -74,7 +75,7 @@ jobs:
           #  https://github.com/skanti/Android-Manual-Build-Command-Line/blob/master/hello-jni/CMakeLists.txt
           
           # compile java files into multiple .class files
-          cd $ROOT_DIR/android/app/src/main/java/com/classicube
+          cd $ROOT_DIR/android/app/src/main/java/com/harmonyclient
           javac *.java -d $ROOT_DIR/android/app/src/main/obj -classpath $SDK_ROOT/android.jar --release 8
           
           cd $ROOT_DIR/android/app/src/main
@@ -86,7 +87,7 @@ jobs:
           # create initial .apk with packaged version of resources
           $TOOLS_ROOT/aapt package -f -M AndroidManifest.xml -S res -F hc-unsigned.apk -I $SDK_ROOT/android.jar
           # and add all the required files
-          $TOOLS_ROOT/aapt add -f hc-unsigned.apk classes.dex lib/armeabi/libclassicube.so lib/armeabi-v7a/libclassicube.so lib/arm64-v8a/libclassicube.so lib/x86/libclassicube.so lib/x86_64/libharmonyclient.so
+          $TOOLS_ROOT/aapt add -f hc-unsigned.apk classes.dex lib/armeabi/libharmonyclient.so lib/armeabi-v7a/libharmonyclient.so lib/arm64-v8a/libharmonyclient.so lib/x86/libharmonyclient.so lib/x86_64/libharmonyclient.so
           
           # sign the apk with debug key (https://stackoverflow.com/questions/16711233/)
           # Note per https://developer.android.com/tools/zipalign
