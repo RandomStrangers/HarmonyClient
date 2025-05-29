@@ -1,4 +1,4 @@
-package com.classicube;
+package com.harmonyclient;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -170,9 +170,9 @@ public class MainActivity extends Activity
 	static boolean gameRunning;
 
 	void startGameAsync() {
-		Log.i("CC_WIN", "handing off to native..");
+		Log.i("HC_WIN", "handing off to native..");
 		try {
-			System.loadLibrary("classicube");
+			System.loadLibrary("harmonyclient");
 		} catch (UnsatisfiedLinkError ex) {
 			ex.printStackTrace();
 			showAlertAsync("Failed to start", ex.getMessage());
@@ -188,9 +188,9 @@ public class MainActivity extends Activity
 		// requestWindowFeature - API level 1
 		// setSoftInputMode, SOFT_INPUT_STATE_UNSPECIFIED, SOFT_INPUT_ADJUST_RESIZE - API level 3
 		input = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-		Log.i("CC_WIN", "CREATE EVENT");
+		Log.i("HC_WIN", "CREATE EVENT");
 		Window window = getWindow();
-		Log.i("CC_WIN", "GAME RUNNING?" + gameRunning);
+		Log.i("HC_WIN", "GAME RUNNING?" + gameRunning);
 		//window.takeSurface(this);
 		//window.takeInputQueue(this);
 		// TODO: Should this be RGBA_8888??
@@ -326,7 +326,7 @@ public class MainActivity extends Activity
 	
 	@Override
 	public void onDestroy() {
-		Log.i("CC_WIN", "APP DESTROYED");
+		Log.i("HC_WIN", "APP DESTROYED");
 		super.onDestroy();
 		pushCmd(CMD_APP_DESTROY);
 	}
@@ -438,23 +438,23 @@ public class MainActivity extends Activity
 	}
 	
 	// SurfaceHolder.Callback - API level 1
-	class CCSurfaceCallback implements SurfaceHolder.Callback {
+	class HCSurfaceCallback implements SurfaceHolder.Callback {
 		public void surfaceCreated(SurfaceHolder holder) {
 			// getSurface - API level 1
-			Log.i("CC_WIN", "win created " + holder.getSurface());
+			Log.i("HC_WIN", "win created " + holder.getSurface());
 			MainActivity.this.pushCmd(CMD_WIN_CREATED, holder.getSurface());
 		}
 		
 		public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 			// getSurface - API level 1
-			Log.i("CC_WIN", "win changed " + holder.getSurface());
+			Log.i("HC_WIN", "win changed " + holder.getSurface());
 			MainActivity.this.pushCmd(CMD_WIN_RESIZED, holder.getSurface());
 		}
 		
 		public void surfaceDestroyed(SurfaceHolder holder) {
 			// getSurface, removeCallback - API level 1
-			Log.i("CC_WIN", "win destroyed " + holder.getSurface());
-			Log.i("CC_WIN", "cur view " + curView);
+			Log.i("HC_WIN", "win destroyed " + holder.getSurface());
+			Log.i("HC_WIN", "cur view " + curView);
 			holder.removeCallback(this);
 			
 			//08-02 21:03:02.967: E/BufferQueueProducer(1350): [SurfaceView - com.classicube.ClassiCube/com.classicube.MainActivity#0] disconnect: not connected (req=2)
@@ -474,10 +474,10 @@ public class MainActivity extends Activity
 	}
 	
 	// SurfaceHolder.Callback2 - API level 9
-	class CCSurfaceCallback2 extends CCSurfaceCallback implements SurfaceHolder.Callback2 {
+	class HCSurfaceCallback2 extends HCSurfaceCallback implements SurfaceHolder.Callback2 {
 		public void surfaceRedrawNeeded(SurfaceHolder holder) {
 			// getSurface - API level 1
-			Log.i("CC_WIN", "win dirty " + holder.getSurface());
+			Log.i("HC_WIN", "win dirty " + holder.getSurface());
 			MainActivity.this.pushCmd(CMD_WIN_REDRAW);
 		}
 	}
@@ -489,17 +489,17 @@ public class MainActivity extends Activity
 	void createSurfaceCallback() {
 		if (callback != null) return;
 		try {
-			callback = new CCSurfaceCallback2(); 
+			callback = new HCSurfaceCallback2(); 
 		} catch (NoClassDefFoundError ex) {
 			ex.printStackTrace();
-			callback = new CCSurfaceCallback();
+			callback = new HCSurfaceCallback();
 		}
 	}
 	 
 	void attachSurface() {
 		// setContentView, requestFocus, getHolder, addCallback, RGBX_8888 - API level 1
 		createSurfaceCallback();
-		CCView view = new CCView(this);
+		HCView view = new HCView(this);
 		view.getHolder().addCallback(callback);
 		view.getHolder().setFormat(PixelFormat.RGBX_8888);
 
@@ -609,7 +609,7 @@ public class MainActivity extends Activity
 		if (curView == null) return;
 
 		// Try to avoid restarting input if possible
-		CCView view = (CCView)curView;
+		HCView view = (HCView)curView;
 		if (view.kbText != null) {
 			String curText = view.kbText.toString();
 			if (text.equals(curText)) return;
@@ -751,7 +751,7 @@ public class MainActivity extends Activity
 		try {
 			Uri uri;
 			if (android.os.Build.VERSION.SDK_INT >= 23){ // android 6.0
-				uri = CCFileProvider.getUriForFile("screenshots/" + path);
+				uri = HCFileProvider.getUriForFile("screenshots/" + path);
 			} else {
 				// when trying to use content:// URIs on my android 4.0.3 test device
 				//   - 1 app crashed
