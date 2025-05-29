@@ -6,7 +6,9 @@ on:
       - main
       - master
   workflow_dispatch:
-
+  schedule:
+    # Every Sunday at 12am
+    - cron: '0 0 * * 0'
 concurrency:
   group: ${{ github.ref }}-haiku
   cancel-in-progress: true
@@ -24,7 +26,7 @@ jobs:
           COMMON_FLAGS: "-O1 -s -fno-stack-protector -fno-math-errno -Qn"
         run: |
           cd src        
-          x86_64-unknown-haiku-gcc *.c Platform_BeOS.cpp Window_BeOS.cpp -o ClassiCube-haiku ${{ env.COMMON_FLAGS }} -lm -lGL -lnetwork -lstdc++ -lbe -lgame -ltracker
+          x86_64-unknown-haiku-gcc *.c Platform_BeOS.cpp Window_BeOS.cpp -o HarmonyClient-haiku ${{ env.COMMON_FLAGS }} -lm -lGL -lnetwork -lstdc++ -lbe -lgame -ltracker
           
 
       - uses: ./.github/actions/notify_failure
@@ -37,7 +39,7 @@ jobs:
       - uses: ./.github/actions/upload_build
         if: ${{ always() && steps.compile.outcome  == 'success' }}
         with:
-          SOURCE_FILE: 'src/ClassiCube-haiku'
+          SOURCE_FILE: 'src/HarmonyClient-haiku'
           DEST_NAME: 'HarmonyClient-haiku'
           
           
