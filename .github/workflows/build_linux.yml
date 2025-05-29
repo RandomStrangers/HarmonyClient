@@ -6,7 +6,9 @@ on:
       - main
       - master
   workflow_dispatch:
-
+  schedule:
+    # Every Sunday at 12am
+    - cron: '0 0 * * 0'
 concurrency:
   group: ${{ github.ref }}-linux
   cancel-in-progress: true
@@ -34,20 +36,19 @@ jobs:
         run: |
           wget https://github.com/ClassiCube/rpi-compiling-stuff/raw/main/linux32.zip
           unzip linux32.zip
-          
+
       - name: Compile 32 bit Linux builds
         shell: bash
         id: compile
         env: 
-          COMMON_FLAGS: "-O1 -s -fno-stack-protector -fno-math-errno -Qn"
-          NIX32_FLAGS:  "-no-pie -fno-pie -m32 -fvisibility=hidden -fcf-protection=none -rdynamic -DCC_BUILD_ICON"
+          COMMON_FLAGS: "-O1 -s -fno-stack-protector -fno-math-errno -Qn -Werror"
+          NIX32_FLAGS:  "-no-pie -fno-pie -m32 -fvisibility=hidden -fcf-protection=none -rdynamic -DCC_BUILD_ICON -L ../lib -Wl,--unresolved-symbols=ignore-in-shared-libs"
         run: |
           LATEST_FLAG=-DCC_COMMIT_SHA=\"${GITHUB_SHA::9}\"
           
           cd src
-          gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.NIX32_FLAGS }} $LATEST_FLAG -o cc-nix32-gl1 -lX11 -lXi -lpthread -lGL -lm -ldl
-          gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.NIX32_FLAGS }} $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_GL2 -o cc-nix32-gl2 -lX11 -lXi -lpthread -lGL -lm -ldl
-
+          gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.NIX32_FLAGS }} $LATEST_FLAG -o hc-nix32-gl1 -lX11 -lXi -lpthread -lGL -lm -ldl
+          gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.NIX32_FLAGS }} $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_GL2 -o hc-nix32-gl2 -lX11 -lXi -lpthread -lGL -lm -ldl
 
       - uses: ./.github/actions/notify_failure
         if: ${{ always() && steps.compile.outcome == 'failure' }}
@@ -59,14 +60,14 @@ jobs:
       - uses: ./.github/actions/upload_build
         if: ${{ always() && steps.compile.outcome == 'success' }}
         with:
-          SOURCE_FILE: 'src/cc-nix32-gl1'
-          DEST_NAME: 'ClassiCube-Linux32-OpenGL'
+          SOURCE_FILE: 'src/hc-nix32-gl1'
+          DEST_NAME: 'HarmonyClient-Linux32-OpenGL'
           
       - uses: ./.github/actions/upload_build
         if: ${{ always() && steps.compile.outcome == 'success' }}
         with:
-          SOURCE_FILE: 'src/cc-nix32-gl2'
-          DEST_NAME: 'ClassiCube-Linux32-ModernGL'
+          SOURCE_FILE: 'src/hc-nix32-gl2'
+          DEST_NAME: 'HarmonyClient-Linux32-ModernGL'
           
           
       
@@ -99,23 +100,19 @@ jobs:
           wget https://github.com/ClassiCube/rpi-compiling-stuff/raw/main/linux64.zip
           unzip linux64.zip
 
-      - uses: actions/checkout@v4
       - name: Compile 64 bit Linux builds
         shell: bash
         id: compile
         env: 
-          COMMON_FLAGS: "-O1 -s -fno-stack-protector -fno-math-errno -Qn"
-          NIX64_FLAGS:  "-no-pie -fno-pie -m64 -fvisibility=hidden -fcf-protection=none -rdynamic -DCC_BUILD_ICON"
+          COMMON_FLAGS: "-O1 -s -fno-stack-protector -fno-math-errno -Qn -Werror"
+          NIX64_FLAGS:  "-no-pie -fno-pie -m64 -fvisibility=hidden -fcf-protection=none -rdynamic -DCC_BUILD_ICON -L ../lib -Wl,--unresolved-symbols=ignore-in-shared-libs"
         run: |
-          apt-get -y update
-          apt-get -y install libx11-dev libxi-dev libgl1-mesa-dev libsdl2-dev
-          LATEST_FLAG=-DCC_COMMIT_SHA=\"${GITHUB_SHA::9}\"          
-          cd src
-          gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.NIX64_FLAGS }} $LATEST_FLAG -o cc-nix64-gl1 -lX11 -lXi -lpthread -lGL -lm -ldl
-          gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.NIX64_FLAGS }} $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_GL2 -o cc-nix64-gl2 -lX11 -lXi -lpthread -lGL -lm -ldl
-          gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.NIX64_FLAGS }} $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_GL2 -DCC_WIN_BACKEND=CC_WIN_BACKEND_SDL2 -o cc-sdl64-gl2 -lSDL2 -lpthread -lGL -lm -ldl
-
-
+          LATEST_FLAG=-DCC_COMMIT_SHA=\"${GITHUB_SHA::9}\"
+        
+          cd src  
+          gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.NIX64_FLAGS }} $LATEST_FLAG -o hc-nix64-gl1 -lX11 -lXi -lpthread -lGL -lm -ldl
+          gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.NIX64_FLAGS }} $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_GL2 -o hc-nix64-gl2 -lX11 -lXi -lpthread -lGL -lm -ldl
+          #gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.NIX64_FLAGS }} $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_GL2 -DCC_WIN_BACKEND=CC_WIN_BACKEND_SDL2 -o hc-sdl64-gl2 -lSDL2 -lpthread -lGL -lm -ldl
       - uses: ./.github/actions/notify_failure
         if: ${{ always() && steps.compile.outcome == 'failure' }}
         with:
@@ -126,20 +123,20 @@ jobs:
       - uses: ./.github/actions/upload_build
         if: ${{ always() && steps.compile.outcome == 'success' }}
         with:
-          SOURCE_FILE: 'src/cc-nix64-gl1'
-          DEST_NAME: 'ClassiCube-Linux64-OpenGL'
+          SOURCE_FILE: 'src/hc-nix64-gl1'
+          DEST_NAME: 'HarmonyClient-Linux64-OpenGL'
           
       - uses: ./.github/actions/upload_build
         if: ${{ always() && steps.compile.outcome == 'success' }}
         with:
-          SOURCE_FILE: 'src/cc-nix64-gl2'
-          DEST_NAME: 'ClassiCube-Linux64-ModernGL'
+          SOURCE_FILE: 'src/hc-nix64-gl2'
+          DEST_NAME: 'HarmonyClient-Linux64-ModernGL'
           
-      - uses: ./.github/actions/upload_build
-        if: ${{ always() && steps.compile.outcome == 'success' }}
-        with:
-          SOURCE_FILE: 'src/cc-sdl64-gl2'
-          DEST_NAME: 'ClassiCube-Linux64-SDL2'
+      #- uses: ./.github/actions/upload_build
+        #if: ${{ always() && steps.compile.outcome == 'success' }}
+        #with:
+          #SOURCE_FILE: 'src/hc-sdl64-gl2'
+          #DEST_NAME: 'HarmonyClient-Linux64-SDL2'
           
           
       - uses: ./.github/actions/notify_success
