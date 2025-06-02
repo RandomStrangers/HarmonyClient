@@ -238,14 +238,14 @@ static const JNINativeMethod methods[] = {
 };
 
 /* This method is automatically called by the Java VM when the */
-/*  activity java class calls 'System.loadLibrary("classicube");' */
+/*  activity java class calls 'System.loadLibrary("harmonyclient");' */
 CC_API jint JNI_OnLoad(JavaVM* vm, void* reserved) {
 	jclass klass;
 	JNIEnv* env;
 	VM_Ptr = vm;
 	JavaGetCurrentEnv(env);
 
-	klass     = (*env)->FindClass(env, "com/classicube/MainActivity");
+	klass     = (*env)->FindClass(env, "com/harmonyclient/MainActivity");
 	App_Class = (*env)->NewGlobalRef(env, klass);
 	JavaRegisterNatives(env, methods);
 	return JNI_VERSION_1_4;

@@ -107,7 +107,7 @@ jobs:
       - uses: ./.github/actions/notify_failure
         if: ${{ always() && steps.compile.outcome == 'failure' }}
         with:
-          NOTIFY_MESSAGE: 'Failed to compile HarmonyClient android build <@999409543001931788>'
+          NOTIFY_MESSAGE: 'Failed to compile HarmonyClient Android build! <@999409543001931788>'
           WEBHOOK_URL: '${{ secrets.WEBHOOK_URL }}'
           
           
@@ -120,5 +120,5 @@ jobs:
       - uses: ./.github/actions/notify_success
         if: ${{ always() && steps.compile.outcome == 'success' }}
         with:
-          NOTIFY_MESSAGE: 'Successfully compiled HarmonyClient android build.'
+          NOTIFY_MESSAGE: 'Successfully compiled HarmonyClient Android build.'
           WEBHOOK_URL: '${{ secrets.WEBHOOK_URL }}'

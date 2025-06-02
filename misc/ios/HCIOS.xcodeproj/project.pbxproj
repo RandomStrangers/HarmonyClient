@@ -102,7 +102,7 @@
 		9A4D0C632BDD168800E1695D /* TouchUI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TouchUI.c; sourceTree = "<group>"; };
 		9A57ECED2BCD1408006A89F0 /* AudioBackend.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = AudioBackend.c; sourceTree = "<group>"; };
 		9A57ECEF2BCD1412006A89F0 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		9A62ADF4286D906F00E5E3DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ClassiCube/Assets.xcassets; sourceTree = "<group>"; };
+		9A62ADF4286D906F00E5E3DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = HarmonyClient/Assets.xcassets; sourceTree = "<group>"; };
 		9A6C79642BFDDEF100676D27 /* FancyLighting.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = FancyLighting.c; sourceTree = "<group>"; };
 		9A6C79662BFDDF0600676D27 /* Queue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Queue.c; sourceTree = "<group>"; };
 		9A6C7DF92C2F610C00676D27 /* LBackend_ios.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBackend_ios.m; sourceTree = "<group>"; };
@@ -111,7 +111,7 @@
 		9A6C7DFF2C41EED700676D27 /* Window_ios.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Window_ios.m; sourceTree = "<group>"; };
 		9A7401D82B737D5B0040E575 /* Commands.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Commands.c; sourceTree = "<group>"; };
 		9A7401DA2B7384060040E575 /* SSL.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SSL.c; sourceTree = "<group>"; };
-		9A89D35727F802B100FF3F80 /* ClassiCube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClassiCube.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A89D35727F802B100FF3F80 /* HarmonyClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HarmonyClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A89D36827F802B400FF3F80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A89D37827F802F500FF3F80 /* LWidgets.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LWidgets.c; sourceTree = "<group>"; };
 		9A89D37A27F802F500FF3F80 /* Graphics_GL2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Graphics_GL2.c; sourceTree = "<group>"; };
@@ -216,7 +216,7 @@
 		9A89D35827F802B100FF3F80 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9A89D35727F802B100FF3F80 /* ClassiCube.app */,
+				9A89D35727F802B100FF3F80 /* HarmonyClient.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -320,9 +320,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9A89D35627F802B100FF3F80 /* ClassiCube */ = {
+		9A89D35627F802B100FF3F80 /* HarmonyClient */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9A89D36D27F802B400FF3F80 /* Build configuration list for PBXNativeTarget "ClassiCube" */;
+			buildConfigurationList = 9A89D36D27F802B400FF3F80 /* Build configuration list for PBXNativeTarget "HarmonyClient" */;
 			buildPhases = (
 				9A89D35327F802B100FF3F80 /* Sources */,
 				9A89D35427F802B100FF3F80 /* Frameworks */,
@@ -332,9 +332,9 @@
 			);
 			dependencies = (
 			);
-			name = ClassiCube;
-			productName = CCIOS2;
-			productReference = 9A89D35727F802B100FF3F80 /* ClassiCube.app */;
+			name = HarmonyClient;
+			productName = HCIOS2;
+			productReference = 9A89D35727F802B100FF3F80 /* HarmonyClient.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -344,7 +344,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1010;
-				ORGANIZATIONNAME = ClassiCube;
+				ORGANIZATIONNAME = HarmonyClient;
 				TargetAttributes = {
 					9A89D35627F802B100FF3F80 = {
 						CreatedOnToolsVersion = 10.1;
@@ -364,7 +364,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9A89D35627F802B100FF3F80 /* ClassiCube */,
+				9A89D35627F802B100FF3F80 /* HarmonyClient */,
 			);
 		};
 /* End PBXProject section */
@@ -602,7 +602,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.classicube.client.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.harmonyclient.client.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -619,7 +619,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.classicube.client.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.harmonyclient.client.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -637,7 +637,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9A89D36D27F802B400FF3F80 /* Build configuration list for PBXNativeTarget "ClassiCube" */ = {
+		9A89D36D27F802B400FF3F80 /* Build configuration list for PBXNativeTarget "HarmonyClient" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A89D36E27F802B400FF3F80 /* Debug */,

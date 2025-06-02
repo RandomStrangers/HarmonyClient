@@ -15,8 +15,6 @@ cc_bool Commands_Execute(const cc_string* input);
 #define COMMAND_FLAG_SINGLEPLAYER_ONLY 0x01
 /* args is passed as a single string instead of being split by spaces */
 #define COMMAND_FLAG_UNSPLIT_ARGS 0x02
-/* This command is only available in multiplayer */
-#define COMMAND_FLAG_MULTIPLAYER_ONLY 0x03
 
 struct ChatCommand;
 /* Represents a client-side command/action */

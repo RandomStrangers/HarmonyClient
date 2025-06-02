@@ -673,7 +673,7 @@ static const BitmapCol defaults_0_9[] = {
 	BitmapColor_RGB(  0, 191, 191), /* 3 */
 	BitmapColor_RGB(191,   0,   0), /* 4 */
 	BitmapColor_RGB(191,   0, 191), /* 5 */
-	BitmapColor_RGB(191, 191,   0), /* 6 */
+	BitmapColor_RGB(255, 180,   32), /* 6 */ //191 191 0 
 	BitmapColor_RGB(191, 191, 191), /* 7 */
 	BitmapColor_RGB( 64,  64,  64), /* 8 */
 	BitmapColor_RGB( 64,  64, 255)  /* 9 */

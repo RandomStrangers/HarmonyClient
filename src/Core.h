@@ -197,6 +197,9 @@ typedef cc_uint8  cc_bool;
 	#undef  CC_UPDATE
 #elif defined __ANDROID__
 	#define CC_BUILD_ANDROID
+	#undef CC_BUILD_PLUGINS
+	// Android does not support plugins, 
+	// so no point in trying to load them
 	#define CC_BUILD_MOBILE
 	#define CC_BUILD_POSIX
 	#define CC_BUILD_GLES

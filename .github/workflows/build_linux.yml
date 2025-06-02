@@ -50,6 +50,7 @@ jobs:
           gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.NIX32_FLAGS }} $LATEST_FLAG -o hc-nix32-gl1 -lX11 -lXi -lpthread -lGL -lm -ldl
           gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.NIX32_FLAGS }} $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_GL2 -o hc-nix32-gl2 -lX11 -lXi -lpthread -lGL -lm -ldl
 
+
       - uses: ./.github/actions/notify_failure
         if: ${{ always() && steps.compile.outcome == 'failure' }}
         with:
@@ -70,7 +71,6 @@ jobs:
           DEST_NAME: 'HarmonyClient-Linux32-ModernGL'
           
           
-      
       - uses: ./.github/actions/notify_success
         if: ${{ always() && steps.compile.outcome == 'success' }}
         with:
@@ -113,6 +113,8 @@ jobs:
           gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.NIX64_FLAGS }} $LATEST_FLAG -o hc-nix64-gl1 -lX11 -lXi -lpthread -lGL -lm -ldl
           gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.NIX64_FLAGS }} $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_GL2 -o hc-nix64-gl2 -lX11 -lXi -lpthread -lGL -lm -ldl
           #gcc *.c ${{ env.COMMON_FLAGS }} ${{ env.NIX64_FLAGS }} $LATEST_FLAG -DCC_GFX_BACKEND=CC_GFX_BACKEND_GL2 -DCC_WIN_BACKEND=CC_WIN_BACKEND_SDL2 -o hc-sdl64-gl2 -lSDL2 -lpthread -lGL -lm -ldl
+
+
       - uses: ./.github/actions/notify_failure
         if: ${{ always() && steps.compile.outcome == 'failure' }}
         with:
@@ -132,11 +134,11 @@ jobs:
           SOURCE_FILE: 'src/hc-nix64-gl2'
           DEST_NAME: 'HarmonyClient-Linux64-ModernGL'
           
-      #- uses: ./.github/actions/upload_build
-        #if: ${{ always() && steps.compile.outcome == 'success' }}
-        #with:
-          #SOURCE_FILE: 'src/hc-sdl64-gl2'
-          #DEST_NAME: 'HarmonyClient-Linux64-SDL2'
+      - uses: ./.github/actions/upload_build
+        if: ${{ always() && steps.compile.outcome == 'success' }}
+        with:
+          SOURCE_FILE: 'src/hc-sdl64-gl2'
+          DEST_NAME: 'HarmonyClient-Linux64-SDL2'
           
           
       - uses: ./.github/actions/notify_success
